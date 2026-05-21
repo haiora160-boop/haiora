@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --app-bg: #eef3f8;
+  --kv-primary: #006dca;
+  --kv-primary-dark: #0459a8;
+  --kv-accent: #19b57b;
+  --kv-border: #d9e4ef;
+  --kv-panel: #ffffff;
+  --kv-soft: #f4f8fb;
+  --kv-text: #0f172a;
+}
+
+html[data-admin-theme='stypeBlue'] {
+  --app-bg: #eef3f8;
+  --kv-primary: #006dca;
+  --kv-primary-dark: #0459a8;
+  --kv-accent: #19b57b;
+  --kv-soft: #f4f8fb;
+}
+
+html[data-admin-theme='coffeeGold'] {
+  --app-bg: #fff7ed;
+  --kv-primary: #8b5a2b;
+  --kv-primary-dark: #6f431a;
+  --kv-accent: #f59e0b;
+  --kv-soft: #fff4df;
+}
+
+html[data-admin-theme='mintFresh'] {
+  --app-bg: #eff6ff;
+  --kv-primary: #2563eb;
+  --kv-primary-dark: #1d4ed8;
+  --kv-accent: #22c55e;
+  --kv-soft: #f8fafc;
+}
+
+html[data-admin-theme='darkLuxury'] {
+  --app-bg: #0b1120;
+  --kv-primary: #0f172a;
+  --kv-primary-dark: #020617;
+  --kv-accent: #38bdf8;
+  --kv-soft: #111827;
+  --kv-panel: #111827;
+  --kv-text: #f8fafc;
+}
+
+
+
+html[data-admin-theme='purplePro'] {
+  --app-bg: #faf5ff;
+  --kv-primary: #7c3aed;
+  --kv-primary-dark: #6d28d9;
+  --kv-accent: #ec4899;
+  --kv-soft: #f5f3ff;
+}
+
+html[data-admin-theme='sunsetBar'] {
+  --app-bg: #fff7ed;
+  --kv-primary: #ea580c;
+  --kv-primary-dark: #c2410c;
+  --kv-accent: #f43f5e;
+  --kv-soft: #ffedd5;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--app-bg);
+  color: var(--kv-text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input, textarea, select, button {
+  font: inherit;
+}
+
+button {
+  touch-action: manipulation;
+}
+
+.touch-card {
+  min-height: 68px;
+}
+
+.shadow-soft {
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+.kv-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.kv-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.32);
+  border-radius: 999px;
+}
+
+.kv-panel {
+  border: 1px solid var(--kv-border);
+  background: var(--kv-panel);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.kv-button-primary {
+  background: var(--kv-primary);
+  color: white;
+  transition: 0.18s ease;
+}
+
+.kv-button-primary:hover {
+  background: var(--kv-primary-dark);
+}
+
+.kv-tab-active {
+  background: var(--kv-primary);
+  color: white;
+}
+
+@keyframes sloganTicker {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(10px); }
+  100% { transform: translateX(0); }
+}
+
+.slogan-live {
+  animation: sloganTicker 2.8s ease-in-out infinite;
+}
+
+html[data-admin-theme='haioraGold'] {
+  --app-bg: #fffaf0;
+  --kv-primary: #6b3f00;
+  --kv-primary-dark: #3b2200;
+  --kv-accent: #f6b400;
+  --kv-soft: #fff4d6;
+  --kv-border: #efd49a;
+}
+
+html[data-admin-theme='oceanPro'] {
+  --app-bg: #ecfeff;
+  --kv-primary: #0369a1;
+  --kv-primary-dark: #075985;
+  --kv-accent: #06b6d4;
+  --kv-soft: #e0f2fe;
+}
+
+html[data-admin-theme='roseMilk'] {
+  --app-bg: #fff1f2;
+  --kv-primary: #be185d;
+  --kv-primary-dark: #9d174d;
+  --kv-accent: #fb7185;
+  --kv-soft: #ffe4e6;
+}
+
+html[data-admin-theme='graphiteGold'] {
+  --app-bg: #f8fafc;
+  --kv-primary: #1f2937;
+  --kv-primary-dark: #111827;
+  --kv-accent: #f59e0b;
+  --kv-soft: #fef3c7;
+}
+
+html[data-admin-theme='limeTea'] {
+  --app-bg: #f7fee7;
+  --kv-primary: #3f6212;
+  --kv-primary-dark: #365314;
+  --kv-accent: #84cc16;
+  --kv-soft: #ecfccb;
+}
+
+html[data-admin-theme='skyClean'] {
+  --app-bg: #eff6ff;
+  --kv-primary: #2563eb;
+  --kv-primary-dark: #1d4ed8;
+  --kv-accent: #60a5fa;
+  --kv-soft: #dbeafe;
+}

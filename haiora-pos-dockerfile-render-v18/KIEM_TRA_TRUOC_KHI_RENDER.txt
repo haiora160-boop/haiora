@@ -1,0 +1,14 @@
+TRƯỚC KHI BẤM DEPLOY RENDER, KIỂM TRA GITHUB:
+
+[ ] Ngoài cùng repo có thư mục apps
+[ ] apps/api tồn tại
+[ ] apps/web tồn tại
+[ ] render.yaml nằm ngoài cùng repo
+[ ] package.json nằm ngoài cùng repo
+[ ] Không upload file .env lên GitHub
+[ ] Không chọn Runtime Docker trên Render
+[ ] Nếu dùng Blueprint: New + -> Blueprint
+[ ] Nếu tạo thủ công: Runtime Node, Root Directory apps/api hoặc apps/web
+
+Nếu Render báo cd apps/api: No such file or directory => GitHub vẫn thiếu apps/api.
+Nếu Render báo Dockerfile not found => bạn đang chọn Docker, phải chọn Node hoặc Blueprint.

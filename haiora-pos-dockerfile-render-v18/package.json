@@ -1,0 +1,26 @@
+{
+  "name": "pos-saas-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Multi-tenant POS SaaS MVP for cafe, restaurant, karaoke, billiards and entertainment businesses.",
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w apps/api\" \"npm run dev -w apps/web\"",
+    "build": "npm run build -w apps/api && npm run build -w apps/web",
+    "db:push": "npm run db:push -w apps/api",
+    "db:seed": "npm run db:seed -w apps/api",
+    "lint": "npm run lint -w apps/web",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "concurrently": "latest",
+    "prettier": "latest"
+  },
+  "engines": {
+    "node": "20.20.2",
+    "npm": "10.8.2"
+  }
+}

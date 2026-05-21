@@ -1,0 +1,53 @@
+services:
+  - type: web
+    name: haiora-api
+    runtime: docker
+    plan: free
+    dockerfilePath: Dockerfile.api
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 20.20.2
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: CORS_ORIGIN
+        value: https://haiora-web.onrender.com
+      - key: WEB_URL
+        value: https://haiora-web.onrender.com
+      - key: API_PUBLIC_URL
+        value: https://haiora-api.onrender.com
+      - key: PUBLIC_UPLOAD_BASE_URL
+        value: https://haiora-api.onrender.com
+      - key: DATABASE_URL
+        fromDatabase:
+          name: haiora-db
+          property: connectionString
+
+  - type: web
+    name: haiora-web
+    runtime: docker
+    plan: free
+    dockerfilePath: Dockerfile.web
+    dockerContext: .
+    envVars:
+      - key: NODE_VERSION
+        value: 20.20.2
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        value: https://haiora-api.onrender.com
+      - key: NEXT_PUBLIC_SOCKET_URL
+        value: https://haiora-api.onrender.com
+
+databases:
+  - name: haiora-db
+    plan: free
+    databaseName: haiora_db
+    user: haiora_user

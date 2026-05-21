@@ -1,0 +1,54 @@
+# POS SaaS Instagram Upgrade v2
+
+Bản này bổ sung các yêu cầu mới:
+
+- Upload avatar thật cho tài khoản cá nhân.
+- Admin upload avatar khi tạo/cập nhật tài khoản nhân viên.
+- Admin upload hình ảnh món thay vì chỉ nhập link.
+- Admin thêm/sửa/xóa bàn và khu vực.
+- Thêm hiệu ứng slogan động theo giao diện.
+- Bếp bấm hoàn thành toàn bộ món sẽ phát sự kiện `order.ready` để POS/order nhận chuông báo.
+- Admin chọn nhiều giao diện: Instagram POS, Coffee Warm, Ocean Service, Midnight Club.
+- Thêm module kết ca/chốt tiền: mở ca, đóng ca, tổng hợp tiền mặt/chuyển khoản/QR/thẻ/ví điện tử và tính chênh lệch.
+
+## Trang mới
+
+```txt
+/admin/tables
+/settings/themes
+/shifts
+```
+
+## Upload ảnh
+
+API mới:
+
+```txt
+POST /uploads/image
+```
+
+Payload dạng JSON base64:
+
+```json
+{
+  "folder": "avatars",
+  "fileName": "avatar.png",
+  "dataUrl": "data:image/png;base64,..."
+}
+```
+
+Local Docker đã có volume `pos_uploads:/app/uploads` để giữ ảnh khi restart container.
+
+> Lưu ý: trên Render free, file upload local có thể không bền nếu service redeploy. Khi chạy production thật nên chuyển upload sang S3, Cloudinary hoặc Supabase Storage.
+
+## Cài lại bản mới
+
+```powershell
+docker compose down -v --remove-orphans
+docker rm -f pos_saas_redis pos_saas_postgres pos_saas_api pos_saas_web
+copy .env.example .env
+docker builder prune -f
+docker compose up --build
+```
+
+Do có thêm bảng `ShiftSession`, nên nên chạy `docker compose down -v` để database tạo lại sạch.
