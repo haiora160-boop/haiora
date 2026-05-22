@@ -96,8 +96,8 @@ export default function LoginPage() {
         </div>
       </header>
 
-      <main className="relative z-10 mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl items-center gap-8 px-4 py-8 lg:grid-cols-[1fr_440px]">
-        <section>
+      <main className="relative z-10 mx-auto grid min-h-[calc(100vh-5rem)] max-w-7xl items-center gap-8 px-4 py-5 pb-[calc(env(safe-area-inset-bottom)+1rem)] lg:grid-cols-[1fr_440px] lg:py-8">
+        <section className="hidden lg:block">
           <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <div className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-white/90 px-4 py-2 text-sm font-black text-amber-700 shadow-sm">
               <Sparkles size={16} />
@@ -149,7 +149,7 @@ export default function LoginPage() {
           initial={{ opacity: 0, x: 24 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.45 }}
-          className="rounded-[2rem] border border-white bg-white/95 p-6 shadow-2xl backdrop-blur"
+          className="mx-auto w-full max-w-md rounded-[1.5rem] border border-white bg-white/95 p-5 shadow-2xl backdrop-blur sm:p-6"
         >
           <div className="flex flex-col items-center border-b border-slate-200 pb-5 text-center">
             <Image
@@ -160,7 +160,7 @@ export default function LoginPage() {
               className="h-auto w-32 object-contain"
               priority
             />
-            <h2 className="mt-4 text-3xl font-black text-slate-950">Đăng nhập hệ thống</h2>
+            <h2 className="mt-4 text-2xl font-black text-slate-950 sm:text-3xl">Đăng nhập hệ thống</h2>
             <p className="mt-1 text-sm font-semibold text-slate-500">Quản lý bán hàng HAIORA POS</p>
           </div>
 
@@ -185,7 +185,7 @@ export default function LoginPage() {
 
           <button
             disabled={loading}
-            className="mt-6 w-full rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 py-3 text-lg font-black text-white shadow-lg shadow-amber-500/25 transition hover:-translate-y-0.5 hover:shadow-xl disabled:translate-y-0 disabled:opacity-60"
+            className="mt-6 min-h-[52px] w-full rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 py-3 text-lg font-black text-white shadow-lg shadow-amber-500/25 transition hover:-translate-y-0.5 hover:shadow-xl disabled:translate-y-0 disabled:opacity-60"
           >
             {loading ? 'Đang đăng nhập...' : 'Vào hệ thống'}
           </button>

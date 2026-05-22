@@ -414,13 +414,13 @@ export default function PosPage() {
         </div>
       )}
 
-      <div className="flex h-[calc(100vh-3.5rem)] flex-col bg-[#e9eff5] text-slate-900 dark:bg-slate-950 dark:text-white">
-        <div className="flex flex-wrap items-center gap-2 border-b border-blue-800 bg-[var(--kv-primary)] px-3 py-2 text-white">
+      <div className="flex min-h-[calc(100dvh-3.5rem)] flex-col bg-[#e9eff5] pb-20 text-slate-900 dark:bg-slate-950 dark:text-white lg:h-[calc(100vh-3.5rem)] lg:pb-0">
+        <div className="flex snap-x items-center gap-2 overflow-x-auto border-b border-blue-800 bg-[var(--kv-primary)] px-3 py-2 text-white kv-scrollbar lg:flex-wrap lg:overflow-visible">
           <button onClick={() => setTab('TABLES')} className={`rounded px-4 py-2 text-sm font-black ${tab === 'TABLES' ? 'bg-white text-[var(--kv-primary)]' : 'bg-white/10 hover:bg-white/20'}`}>Phòng / Bàn</button>
           <button onClick={() => setTab('MENU')} className={`rounded px-4 py-2 text-sm font-black ${tab === 'MENU' ? 'bg-white text-[var(--kv-primary)]' : 'bg-white/10 hover:bg-white/20'}`}>Thực đơn</button>
           <button className="rounded bg-white/10 px-4 py-2 text-sm font-black hover:bg-white/20">Đặt gọi món</button>
           <button className="rounded bg-white/10 px-4 py-2 text-sm font-black hover:bg-white/20">Giao đi</button>
-          <div className="ml-auto flex min-w-[280px] flex-1 items-center rounded bg-white px-3 py-2 text-slate-900 md:max-w-lg">
+          <div className="flex min-w-[260px] flex-1 items-center rounded bg-white px-3 py-2 text-slate-900 md:max-w-lg lg:ml-auto">
             <Search size={18} className="mr-2 text-slate-400" />
             <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Tìm mặt hàng (F3)" className="w-full bg-transparent text-sm font-semibold outline-none" />
           </div>
@@ -430,7 +430,7 @@ export default function PosPage() {
           <button onClick={syncOfflineOrders} className="rounded bg-white/15 px-3 py-2 text-xs font-black hover:bg-white/25"><RefreshCw size={15} className="inline" /> Đồng bộ</button>
         </div>
 
-        <div className="grid min-h-0 flex-1 grid-cols-1 gap-0 lg:grid-cols-[260px_1fr_430px]">
+        <div className="grid min-h-0 flex-1 grid-cols-1 gap-3 p-2 lg:grid-cols-[260px_1fr_430px] lg:gap-0 lg:p-0">
           <aside className="hidden min-h-0 border-r border-slate-300 bg-white dark:border-slate-800 dark:bg-slate-900 lg:flex lg:flex-col">
             <div className="border-b border-slate-200 p-3 dark:border-slate-800">
               <p className="text-xs font-black uppercase text-slate-400">Kiểu bán</p>
@@ -490,7 +490,7 @@ export default function PosPage() {
               </div>
             </div>
 
-            <div className="h-full overflow-auto p-3 pb-28 kv-scrollbar">
+            <div className="h-full overflow-auto p-3 pb-28 kv-scrollbar mobile-scroll-area">
               {tab === 'TABLES' ? (
                 <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                   {data?.areas.flatMap((area) => area.tables.map((table) => (
@@ -514,9 +514,9 @@ export default function PosPage() {
                       key={product.id}
                       whileTap={{ scale: 0.97 }}
                       onClick={() => addProduct(product)}
-                      className="group overflow-hidden rounded-md border border-slate-200 bg-white text-left shadow-sm transition hover:border-[var(--kv-primary)] hover:shadow-md dark:border-slate-700 dark:bg-slate-900"
+                      className="group min-h-[188px] overflow-hidden rounded-2xl border border-slate-200 bg-white text-left shadow-sm transition hover:border-[var(--kv-primary)] hover:shadow-md dark:border-slate-700 dark:bg-slate-900"
                     >
-                      <div className="relative h-28 bg-slate-100 dark:bg-slate-800">
+                      <div className="relative h-32 bg-slate-100 dark:bg-slate-800 sm:h-28">
                         {product.imageUrl ? (
                           <img src={product.imageUrl} alt={product.name} className="h-full w-full object-cover" />
                         ) : (
@@ -536,7 +536,7 @@ export default function PosPage() {
             </div>
           </section>
 
-          <aside className="flex min-h-0 flex-col border-l border-slate-300 bg-white dark:border-slate-800 dark:bg-slate-900">
+          <aside className="flex min-h-0 flex-col rounded-2xl border border-slate-200 bg-white shadow-soft dark:border-slate-800 dark:bg-slate-900 lg:rounded-none lg:border-l lg:border-r-0 lg:border-y-0 lg:shadow-none">
             <div className="border-b border-slate-200 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-900">
               <div className="flex items-center justify-between">
                 <div>

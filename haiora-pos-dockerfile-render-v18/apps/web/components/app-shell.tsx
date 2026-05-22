@@ -32,6 +32,7 @@ import {
   UserCircle,
   Users,
   WalletCards,
+  X,
   Warehouse,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -109,6 +110,107 @@ function SidebarGroup({ title, links, pathname, canSeeAdmin }: { title: string; 
   );
 }
 
+
+const mobilePrimaryLinks = [
+  { href: '/pos', label: 'Bán hàng', icon: ShoppingCart },
+  { href: '/kitchen', label: 'Bếp', icon: ChefHat },
+  { href: '/dashboard', label: 'Tổng quan', icon: LayoutDashboard },
+  { href: '/chat', label: 'Chat', icon: MessageCircle },
+  { href: '/profile', label: 'Hồ sơ', icon: UserCircle },
+];
+
+function MobileBottomNav({ pathname }: { pathname: string }) {
+  return (
+    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 bg-white/95 px-2 pb-[calc(env(safe-area-inset-bottom)+0.35rem)] pt-2 shadow-[0_-10px_28px_rgba(15,23,42,0.12)] backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/95 lg:hidden">
+      <div className="grid grid-cols-5 gap-1">
+        {mobilePrimaryLinks.map((item) => {
+          const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`flex min-h-[54px] flex-col items-center justify-center gap-1 rounded-2xl text-[11px] font-black transition ${
+                active
+                  ? 'bg-[var(--kv-primary)] text-white shadow-sm'
+                  : 'text-slate-500 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
+              }`}
+            >
+              <item.icon size={20} />
+              <span>{item.label}</span>
+            </Link>
+          );
+        })}
+      </div>
+    </nav>
+  );
+}
+
+function MobileDrawer({ open, onClose, pathname, canSeeAdmin }: { open: boolean; onClose: () => void; pathname: string; canSeeAdmin: boolean }) {
+  const groups = [
+    { title: 'Bán hàng', links: saleLinks },
+    { title: 'Quản lý', links: manageLinks },
+    { title: 'Hệ thống', links: systemLinks },
+  ];
+
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-[60] lg:hidden">
+      <button aria-label="Đóng menu" onClick={onClose} className="absolute inset-0 bg-slate-950/45" />
+      <motion.div
+        initial={{ x: '-100%' }}
+        animate={{ x: 0 }}
+        exit={{ x: '-100%' }}
+        transition={{ duration: 0.2 }}
+        className="relative h-full w-[86vw] max-w-sm overflow-y-auto bg-white p-4 shadow-2xl dark:bg-slate-950"
+      >
+        <div className="flex items-center justify-between border-b border-slate-200 pb-4 dark:border-slate-800">
+          <div className="flex items-center gap-3">
+            <div className="grid h-12 w-12 place-items-center rounded-2xl bg-amber-50">
+              <Image src="/logo-haiora.png" alt="HAIORA POS" width={44} height={44} className="h-10 w-10 object-contain" />
+            </div>
+            <div>
+              <p className="text-lg font-black">HAIORA POS</p>
+              <p className="text-xs font-bold text-slate-500">Menu điện thoại</p>
+            </div>
+          </div>
+          <button onClick={onClose} className="grid h-10 w-10 place-items-center rounded-xl bg-slate-100 dark:bg-slate-800">
+            <X size={20} />
+          </button>
+        </div>
+
+        <div className="mt-4 space-y-5">
+          {groups.map((group) => (
+            <div key={group.title}>
+              <p className="px-1 text-xs font-black uppercase tracking-wider text-slate-400">{group.title}</p>
+              <div className="mt-2 grid gap-2">
+                {group.links
+                  .filter((link) => !('adminOnly' in link) || !link.adminOnly || canSeeAdmin)
+                  .map((item) => {
+                    const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                    return (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={onClose}
+                        className={`flex min-h-[48px] items-center gap-3 rounded-2xl px-4 text-sm font-black ${
+                          active ? 'bg-[var(--kv-primary)] text-white' : 'bg-slate-50 text-slate-700 dark:bg-slate-900 dark:text-slate-200'
+                        }`}
+                      >
+                        <item.icon size={20} />
+                        {item.label}
+                      </Link>
+                    );
+                  })}
+              </div>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
 export function AppShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -117,6 +219,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const activeTheme = themeOptions.find((item) => item.value === theme) || themeOptions[0];
   const [branding, setBranding] = useState<{ appName: string; slogans: string[] }>({ appName: 'stype pos', slogans: [] });
   const [sloganIndex, setSloganIndex] = useState(0);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const canSeeAdmin = canManage(user?.role);
   const isPos = pathname === '/pos';
   const pageTitle = useMemo(() => {
@@ -206,11 +309,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <LogOut size={18} />
             </button>
           </div>
-          <button className="grid h-10 w-10 place-items-center rounded-md bg-white/10 md:hidden">
+          <button onClick={() => setMobileOpen(true)} className="grid h-10 w-10 place-items-center rounded-md bg-white/10 md:hidden" aria-label="Mở menu">
             <Menu size={20} />
           </button>
         </div>
       </header>
+
+      <MobileDrawer open={mobileOpen} onClose={() => setMobileOpen(false)} pathname={pathname} canSeeAdmin={canSeeAdmin} />
 
       <aside className="fixed bottom-0 left-0 top-14 z-30 hidden w-60 overflow-y-auto border-r border-slate-200 bg-white px-3 py-4 dark:border-slate-800 dark:bg-slate-900 lg:block">
         <div className="rounded-xl border border-blue-100 bg-blue-50 p-3 dark:border-slate-700 dark:bg-slate-800">
@@ -243,7 +348,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
 
-      <main className={`pt-14 ${isPos ? 'lg:pl-0' : 'lg:pl-60'}`}>
+      <main className={`pb-24 pt-14 lg:pb-0 ${isPos ? 'lg:pl-0' : 'lg:pl-60'}`}>
         {!isPos && (
           <div className="sticky top-14 z-20 border-b border-slate-200 bg-white/90 px-4 py-3 backdrop-blur dark:border-slate-800 dark:bg-slate-900/90">
             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -259,6 +364,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         )}
         <div className={isPos ? '' : 'p-4'}>{children}</div>
       </main>
+      <MobileBottomNav pathname={pathname} />
     </div>
   );
 }

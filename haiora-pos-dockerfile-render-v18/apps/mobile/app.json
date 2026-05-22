@@ -1,13 +1,28 @@
 {
   "expo": {
-    "name": "POS SaaS Mobile",
-    "slug": "pos-saas-mobile",
+    "name": "HAIORA POS",
+    "slug": "haiora-pos-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "scheme": "possaas",
+    "scheme": "haiorapos",
     "userInterfaceStyle": "automatic",
-    "ios": { "supportsTablet": true },
-    "android": { "adaptiveIcon": { "backgroundColor": "#2563eb" } },
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#fffaf0"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.haiora.pos"
+    },
+    "android": {
+      "package": "com.haiora.pos",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#fffaf0"
+      }
+    },
     "plugins": ["expo-router"]
   }
 }

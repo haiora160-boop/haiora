@@ -1,0 +1,17 @@
+{
+  "name": "HAIORA POS",
+  "short_name": "HAIORA",
+  "description": "Phần mềm POS dành cho quán cà phê, nhà hàng và chuỗi F&B",
+  "start_url": "/login",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fffaf0",
+  "theme_color": "#6b3f00",
+  "categories": ["business", "productivity", "food"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/maskable-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
