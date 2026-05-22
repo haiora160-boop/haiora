@@ -1,18 +1,26 @@
-FROM node:20-alpine
-
+# HAIORA POS API - Render Dockerfile v19
+# Build context: repository root (must contain apps/api)
+FROM node:20-alpine AS base
 WORKDIR /app
 
+ENV NODE_ENV=production
+ENV NPM_CONFIG_LEGACY_PEER_DEPS=true
+
+# Install API dependencies only, avoiding root workspaces/mobile conflicts
 COPY apps/api/package*.json ./
+RUN npm install --legacy-peer-deps \
+  && npm install prisma@6.19.0 @prisma/client@6.19.0 --save-exact --legacy-peer-deps
 
-RUN npm install --legacy-peer-deps
-RUN npm install prisma@6.19.0 @prisma/client@6.19.0 tsx@4.20.5 --save-exact --legacy-peer-deps
-
+# Copy API source
 COPY apps/api/prisma ./prisma
 COPY apps/api/src ./src
 COPY apps/api/tsconfig.json ./tsconfig.json
 
+# Generate Prisma Client with Prisma 6.19.0 only. Do NOT use plain `npx prisma` because it may pull Prisma 7.
 RUN npx prisma@6.19.0 generate
 
 EXPOSE 4000
 
-CMD ["sh", "-c", "npx prisma@6.19.0 db push && npx tsx prisma/seed.ts && npx tsx src/index.ts"]
+# Render provides PORT, DATABASE_URL and other env vars.
+# Run schema push/seed, then start API directly with tsx to avoid blocking deploy on TypeScript strict build.
+CMD ["sh", "-c", "npx prisma@6.19.0 db push && npm run db:seed && npx tsx src/index.ts"]
