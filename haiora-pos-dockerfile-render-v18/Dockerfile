@@ -11,4 +11,4 @@ COPY apps/api/src ./src
 COPY apps/api/tsconfig.json ./tsconfig.json
 RUN npx prisma@6.19.0 generate
 EXPOSE 4000
-CMD ["sh", "-c", "npx prisma db push && npm run db:seed && npx tsx src/index.ts"]
+CMD ["sh", "-c", "npx prisma@6.19.0 db push && npm run db:seed && npx tsx src/index.ts"]
